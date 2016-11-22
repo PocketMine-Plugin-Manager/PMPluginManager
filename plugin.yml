@@ -1,0 +1,9 @@
+name: pmpm
+main: HittmanA\pmpm\MainClass
+version: 1.0.0
+api: 2.1.0
+description: Official PMPM plugin
+commands:
+  download:
+    description: Downloads the specified plugin from the pmpm registry.
+    permission: pmpm.test
