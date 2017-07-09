@@ -1,6 +1,6 @@
 <?php
 
-namespace HittmanA\pmpm;
+namespace HittmanA\PMPluginManager;
 
 use pocketmine\event;
 use pocketmine\Server;

@@ -1,6 +1,6 @@
 <?php
 
-namespace HittmanA\pmpm;
+namespace HittmanA\PMPluginManager;
 use pocketmine\event;
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
@@ -12,7 +12,7 @@ use pocketmine\utils\Utils;
 use pocketmine\utils\Config;
 use pocketmine\command\ConsoleCommandSender;
 
-use HittmanA\pmpm\Plugin;
+use HittmanA\PMPluginManager\Plugin;
 
 class MainClass extends PluginBase implements Listener 
 {
@@ -20,12 +20,12 @@ class MainClass extends PluginBase implements Listener
         {
             @mkdir($this->getDataFolder());
             $this->pluginInfo = new Config($this->getDataFolder() . "pluginInformation.json", Config::JSON, []);
-            $this->getLogger()->info("PMPM enabled v2.0.0");
+            $this->getLogger()->info("PMPM enabled v2.0.5");
             $this->getServer()->getPluginManager()->registerEvents($this, $this);
         }
     public function onDisable()
         {
-            $this->getLogger()->info("PMPM disabled v2.0.0");
+            $this->getLogger()->info("PMPM disabled v2.0.5");
         }
     public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){ 
         if($cmd->getName() == "download"){
@@ -50,8 +50,7 @@ class MainClass extends PluginBase implements Listener
                                                 ]);
                         $this->pluginInfo->save(true);
                         
-                        $sender->sendMessage("Reloading server in 3 seconds...");
-                        sleep(3);
+                        $sender->sendMessage("Reloading server...");
                         $this->getServer()->dispatchCommand(new ConsoleCommandSender(), 'reload');
                         
                         return true; 
@@ -70,9 +69,8 @@ class MainClass extends PluginBase implements Listener
                     $success = unlink("./plugins/".$pluginToRemove.".phar");
                     $this->pluginInfo->remove($pluginToRemove);
                     if($success) {
-                        $sender->sendMessage("Plugin successfully deleted! Restarting server in 3 seconds...");
+                        $sender->sendMessage("Plugin successfully deleted! Reloading server...");
                         $this->pluginInfo->save(true);
-                        sleep(3);
                         $this->getServer()->dispatchCommand(new ConsoleCommandSender(), 'reload');
                     }else{
                         $sender->sendMessage("Plugin was not able to be deleted...");
