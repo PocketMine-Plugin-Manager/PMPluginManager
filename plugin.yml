@@ -1,6 +1,6 @@
 name: PMPluginManager
 main: HittmanA\PMPluginManager\MainClass
-version: 2.0.5
+version: 2.0.6
 api: 3.0.0-ALPHA6
 description: Official PMPM plugin
 commands:

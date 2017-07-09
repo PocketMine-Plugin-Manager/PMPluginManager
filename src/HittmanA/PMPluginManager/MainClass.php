@@ -20,12 +20,12 @@ class MainClass extends PluginBase implements Listener
         {
             @mkdir($this->getDataFolder());
             $this->pluginInfo = new Config($this->getDataFolder() . "pluginInformation.json", Config::JSON, []);
-            $this->getLogger()->info("PMPM enabled v2.0.5");
+            $this->getLogger()->info("PMPM enabled v2.0.6");
             $this->getServer()->getPluginManager()->registerEvents($this, $this);
         }
     public function onDisable()
         {
-            $this->getLogger()->info("PMPM disabled v2.0.5");
+            $this->getLogger()->info("PMPM disabled v2.0.6");
         }
     public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){ 
         if($cmd->getName() == "download"){
@@ -36,7 +36,7 @@ class MainClass extends PluginBase implements Listener
                     $plugin = new Plugin($pluginToDownload, $sender);
                     if($plugin->ready_to_download == true) {
                         set_time_limit(0);
-                        $fp = fopen ("./plugins/$pluginToDownload.phar", 'w+');
+                        $fp = fopen ($this->getServer()->getDataPath()."/plugins/$pluginToDownload.phar", 'w+');
                         $code=Utils::getURL($plugin->download_url);
                         fwrite($fp, $code);
                         fclose($fp);
@@ -66,7 +66,7 @@ class MainClass extends PluginBase implements Listener
             if(count($args) != 0) {
                 $pluginToRemove = $args[0];
                 if(isset($this->pluginInfo->$pluginToRemove)) {
-                    $success = unlink("./plugins/".$pluginToRemove.".phar");
+                    $success = unlink($this->getServer()->getDataPath()."/plugins/".$pluginToRemove.".phar");
                     $this->pluginInfo->remove($pluginToRemove);
                     if($success) {
                         $sender->sendMessage("Plugin successfully deleted! Reloading server...");
