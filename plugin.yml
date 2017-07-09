@@ -1,9 +1,18 @@
 name: pmpm
 main: HittmanA\pmpm\MainClass
-version: 1.0.0
-api: 2.1.0
+version: 2.0.0
+api: 3.0.0-ALPHA6
 description: Official PMPM plugin
 commands:
   download:
-    description: Downloads the specified plugin from the pmpm registry.
-    permission: pmpm.test
+    description: Downloads the specified plugin from the poggit registry.
+    usage: /download <plugin>
+    aliases: [add, addplugin, getplugin, dl]
+  remove:
+    description: Removes the specified plugin from your server
+    usage: /remove <plugin>
+    aliases: [rm, delete]
+  __UpdateSelf:
+    description: Update the PMPM plugin
+    usage: /__UpdateSelf
+    
