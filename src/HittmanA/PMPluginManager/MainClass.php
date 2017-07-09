@@ -17,24 +17,29 @@ use HittmanA\PMPluginManager\Plugin;
 class MainClass extends PluginBase implements Listener 
 {
     public function onEnable()
-        {
-            @mkdir($this->getDataFolder());
-            $this->pluginInfo = new Config($this->getDataFolder() . "pluginInformation.json", Config::JSON, []);
-            $this->getLogger()->info("PMPM enabled v2.0.6");
-            $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        }
+    {
+        @mkdir($this->getDataFolder());
+        $this->pluginInfo = new Config($this->getDataFolder() . "pluginInformation.json", Config::JSON, []);
+        $this->getLogger()->info("PMPM enabled v2.0.6");
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    }
     public function onDisable()
+    {
+        $this->getLogger()->info("PMPM disabled v2.0.6");
+    }
+    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args)
+    {
+        if ($cmd->getName() == "download")
         {
-            $this->getLogger()->info("PMPM disabled v2.0.6");
-        }
-    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){ 
-        if($cmd->getName() == "download"){
-            if(count($args) != 0) {
+            if (count($args) != 0) 
+            {
                 $pluginToDownload = $args[0];
-                if(!isset($this->pluginInfo->$pluginToDownload)) {
+                if (!isset($this->pluginInfo->$pluginToDownload))
+                {
                     $sender->sendMessage("Looking for plugin '".$pluginToDownload."' in the Poggit registry");
                     $plugin = new Plugin($pluginToDownload, $sender);
-                    if($plugin->ready_to_download == true) {
+                    if ($plugin->ready_to_download == true) 
+                    {
                         set_time_limit(0);
                         $fp = fopen ($this->getServer()->getDataPath()."/plugins/$pluginToDownload.phar", 'w+');
                         $code=Utils::getURL($plugin->download_url);
@@ -54,15 +59,15 @@ class MainClass extends PluginBase implements Listener
                         $this->getServer()->dispatchCommand(new ConsoleCommandSender(), 'reload');
                         
                         return true; 
-                    }else{
+                    } else {
                         return true;
                     }
-                }else{
+                } else {
                     $sender->sendMessage("You already have that plugin installed!");
                     return true;
                 }
             }
-        }elseif($cmd->getName() == "remove"){
+        } elseif($cmd->getName() == "remove") {
             if(count($args) != 0) {
                 $pluginToRemove = $args[0];
                 if(isset($this->pluginInfo->$pluginToRemove)) {
@@ -81,7 +86,7 @@ class MainClass extends PluginBase implements Listener
                     return true;
                 }
             }
-        }elseif($cmd->getName() == "__UpdateSelf") {
+        } elseif($cmd->getName() == "__UpdateSelf") {
             $this->getServer()->dispatchCommand(new ConsoleCommandSender(), 'remove PMPM');
             $this->getServer()->dispatchCommand(new ConsoleCommandSender(), 'download PMPM');
         }

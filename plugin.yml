@@ -1,18 +1,25 @@
 name: PMPluginManager
 main: HittmanA\PMPluginManager\MainClass
 version: 2.0.6
-api: 3.0.0-ALPHA6
+api: [3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3, 3.0.0-ALPHA4, 3.0.0-ALPHA5, 3.0.0-ALPHA6]
 description: Official PMPM plugin
 commands:
   download:
     description: Downloads the specified plugin from the poggit registry.
     usage: /download <plugin>
     aliases: [add, addplugin, getplugin, dl]
+    permission: manageplugins
   remove:
     description: Removes the specified plugin from your server
     usage: /remove <plugin>
     aliases: [rm, delete]
+    permission: manageplugins
   __UpdateSelf:
     description: Update the PMPM plugin
     usage: /__UpdateSelf
-    
+    permission: manageplugins
+  
+permissions:
+ manageplugins:
+  default: op
+  description: "Allow ops to manage plugins"
